@@ -11,3 +11,20 @@ style.general.css
 angular.app.js
 ```
 
+### Responsabilidad de cada función:
+
+##### Responsabilidad de la función "captureData":
+```
+ ctrl.captureData();
+```
+Esta función captura los datos que se ingresaron en el TextArea, valida entre otras cosas, el número de casos de prueba,
+que el número que conforma la matriz no sea mayor o menor a determinado número, de igual forma el número de comandos a ejecutar.
+
+##### Responsabilidad de la función "processCommand":
+```
+ ctrl.processCommand();
+```
+
+Esta función es llamada por "captureData", donde se obtiene el tipo de comando a ejecutar y los números de las variables que conforman la matriz, previo lanzamos la función que procesa ese comando y enviamos los parametros que generan el resultado en "ctrl.matrix"
+
+
