@@ -27,4 +27,13 @@ que el número que conforma la matriz no sea mayor o menor a determinado número
 
 Esta función es llamada por "captureData", donde se obtiene el tipo de comando a ejecutar y los números de las variables que conforman la matriz, previo lanzamos la función que procesa ese comando y enviamos los parametros que generan el resultado en "ctrl.matrix"
 
+##### Responsabilidad de la función "Update":
+```
+ ctrl.Update();
+```
+
+Esta función en base al parametro N y a las variables (x,y,z) y una operación matemática, genera la matriz
+
+
+
 

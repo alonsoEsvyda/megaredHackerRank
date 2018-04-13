@@ -9,8 +9,9 @@ function hackerRankController($scope,$http,$timeout){
     var ctrl = this;
     ctrl.capture = "";
     ctrl.showCapture = false;
+    ctrl.showMatrix = false;
     ctrl.messageCapture = "";
-    ctrl.matriz = [];
+    ctrl.matrix = [];
 
     ctrl.init = function() {
     };
@@ -97,14 +98,19 @@ function hackerRankController($scope,$http,$timeout){
     }
     
     ctrl.Update = function(x,y,z,W, N){
+        /* Validamos que los 3 parametros de entrada no sean mayor que N ni menor que 1, cuyo número define la matriz */
         if(x < 1 || x > N ||
            y < 1 || y > N ||
            z < 1 || z > N){
             ctrl.showCapture = true;
             ctrl.messageCapture = 'Los valores de la matriz están fuera de rango ya que x,y,z > 1 y x,y,z < N';
         }else{
-            
-        }
+            /* Operamos sobre los valores de entrada en base a N y construimos las posiciones de la matriz */
+            /* Fuente de información para la construcción de la formula: Google */
+            ctrl.matrix[Math.pow((N + 1), 2) * z + (N + 1) * y + x] = W;
+            console.log("Matrix array");
+            console.log(ctrl.matrix);
+        }   
     }
 
     ctrl.Query = function(x1,y1,z1,x2,y2,z2,N){
