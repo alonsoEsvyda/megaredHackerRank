@@ -27,17 +27,17 @@ function hackerRankController($scope,$http,$timeout){
     		ctrl.showCapture = false;
     		/* Definimos el número de casos de prueba obteniendo del array [lines] la posición cero*/
             var positionLine = 0;
-    		var nTst = parseInt(lines[positionLine++]);
-    		console.log(nTst);
-    		console.log("nTst");
+    		var T = parseInt(lines[positionLine++]);
+    		console.log(T);
+    		console.log("T");
     		/* Validamos que el número de casos de prueba no sea menor a 1 y no sea mayor a 50 */
-    		if((nTst < 1) || (nTst > 50)){
-        		ctrl.messageCapture= 'Los casos de prueba no esta en el rango permitido (1 < T < 50; T = ' + nTst +').';
+    		if((T < 1) || (T > 50)){
+        		ctrl.messageCapture= 'Los casos de prueba no esta en el rango permitido (1 < T < 50; T = ' + T +').';
     		}else{
-    			/* Recorremos el número de casos de prueba que exista en la variable {nTst} */
-    			while(nTst--){
-    				console.log(nTst);
-    				console.log("nTst While");
+    			/* Recorremos el número de casos de prueba que exista en la variable {T} */
+    			while(T--){
+    				console.log(T);
+    				console.log("T While");
     				/* Capturamos los argumentos para definir la matriz obteniendo la segunda posición del array [lines]
     				   creando un array a partir de esa posición */
     				var args = lines[positionLine++].split(' ');
@@ -97,7 +97,14 @@ function hackerRankController($scope,$http,$timeout){
     }
     
     ctrl.Update = function(x,y,z,W, N){
-        
+        if(x < 1 || x > N ||
+           y < 1 || y > N ||
+           z < 1 || z > N){
+            ctrl.showCapture = true;
+            ctrl.messageCapture = 'Los valores de la matriz están fuera de rango ya que x,y,z > 1 y x,y,z < N';
+        }else{
+            
+        }
     }
 
     ctrl.Query = function(x1,y1,z1,x2,y2,z2,N){
