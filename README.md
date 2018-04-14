@@ -34,6 +34,13 @@ Esta función es llamada por "captureData", donde se obtiene el tipo de comando 
 
 Esta función en base al parametro N y a las variables (x,y,z) y una operación matemática, genera la matriz
 
+##### Responsabilidad de la función "Query":
+```
+ ctrl.Query();
+```
+Esta función en base a las coordenadas alamacenadas en el array [ctrl.core] valida [N] en el array [ctrl.matrix]. Las coordenadas las obtiene de acuerdo al indice 
+de [N] en el array [ctrl.matriz] como antes se definió en un ciclo "For". 
+
 
 
 

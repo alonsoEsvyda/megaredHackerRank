@@ -11,51 +11,47 @@ function hackerRankController($scope,$http,$timeout){
     ctrl.showCapture = false;
     ctrl.showMatrix = false;
     ctrl.messageCapture = "";
-    ctrl.matrix = [];
+    ctrl.result = [];
+    ctrl.core = [];
 
     ctrl.init = function() {
     };
 
     ctrl.captureData = function(){
     	let lines = ctrl.capture.split('\n');
-    	console.log(lines);
-    	console.log("lines");
+
     	/* Validamos que el el array [line] Tenga más de 3 posiciones en su contenido */
     	if(lines.length < 3){
     		ctrl.showCapture = true;
-    		ctrl.messageCapture = "Debes tener por lo menos 1 caso de uso, matriz de incialización y 1 comando ";
+    		ctrl.messageCapture = "Debes tener por lo menos 1 caso de uso, matríz de incialización y 1 comando ";
     	}else{
     		ctrl.showCapture = false;
     		/* Definimos el número de casos de prueba obteniendo del array [lines] la posición cero*/
             var positionLine = 0;
     		var T = parseInt(lines[positionLine++]);
-    		console.log(T);
-    		console.log("T");
     		/* Validamos que el número de casos de prueba no sea menor a 1 y no sea mayor a 50 */
     		if((T < 1) || (T > 50)){
         		ctrl.messageCapture= 'Los casos de prueba no esta en el rango permitido (1 < T < 50; T = ' + T +').';
     		}else{
     			/* Recorremos el número de casos de prueba que exista en la variable {T} */
     			while(T--){
-    				console.log(T);
-    				console.log("T While");
-    				/* Capturamos los argumentos para definir la matriz obteniendo la segunda posición del array [lines]
+    				/* Capturamos los argumentos para definir la matríz obteniendo la segunda posición del array [lines]
     				   creando un array a partir de esa posición */
     				var args = lines[positionLine++].split(' ');
     				/* Validamos que ese array tenga dos psoiciones */
     				if(args.length != 2){
             			ctrl.showCapture = true;
-            			ctrl.messageCapture = "La matriz debe tener 2 argumentos, 1  que defina la matriz y otro que defina el número de operaciones";
+            			ctrl.messageCapture = "La matríz debe tener 2 argumentos, 1  que defina la matríz y otro que defina el número de operaciones";
     				}else{
     					ctrl.showCapture = false;
-    					/* Asignamos el valor que compone la matriz a {N} y el número de operaciones a {M} */
+    					/* Asignamos el valor que compone la matríz a {N} y el número de operaciones a {M} */
     					var N = parseInt(args[0]);
         				var M = parseInt(args[1]);
 
-                        /* Validamos que el número que conforma la matriz no sea menor a 1 ni mayor a 100 */
+                        /* Validamos que el número que conforma la matríz no sea menor a 1 ni mayor a 100 */
                         if((N < 1) || (N > 100)){
                             ctrl.showCapture = true;
-                            ctrl.messageCapture = 'El número de la matriz, está fuera de rango, debe ser mayor a 1 y menor que 100';
+                            ctrl.messageCapture = 'El número de la matríz, está fuera de rango, debe ser mayor a 1 y menor que 100';
                         }else{
                             ctrl.showCapture = false;
                             /* Validamos que el número de comandos no sea menor a 1, ni mayor a 1000 */
@@ -64,6 +60,11 @@ function hackerRankController($scope,$http,$timeout){
                                 ctrl.messageCapture = 'El número de caso de prueba no de ser menor a 1 y menor 1000';
                             }else{
                                 ctrl.showCapture = false;
+                                /* Vaciamos el array y empezamos desde cero */
+                                ctrl.matrix = [];
+                                while(ctrl.matrix.length > 0){
+                                    ctrl.matrix.pop();
+                                }
                                 /* Recorremos el número de comandos que se indicó, en un bucle */
                                 while(M--) {
                                     var command = lines[positionLine++];
@@ -103,18 +104,50 @@ function hackerRankController($scope,$http,$timeout){
            y < 1 || y > N ||
            z < 1 || z > N){
             ctrl.showCapture = true;
-            ctrl.messageCapture = 'Los valores de la matriz están fuera de rango ya que x,y,z > 1 y x,y,z < N';
+            ctrl.messageCapture = 'Los valores de la matríz están fuera de rango ya que x,y,z > 1 y x,y,z < N';
         }else{
-            /* Operamos sobre los valores de entrada en base a N y construimos las posiciones de la matriz */
+            /* Operamos sobre los valores de entrada en base a N y construimos las posiciones de la matríz */
             /* Fuente de información para la construcción de la formula: Google */
             ctrl.matrix[Math.pow((N + 1), 2) * z + (N + 1) * y + x] = W;
-            console.log("Matrix array");
-            console.log(ctrl.matrix);
+            /* Guardamos en un array y en la diferente posición de cada valor N en array [ctrl.matrix] las coordenadas del cubo */
+            for (var i = 0; i <= ctrl.matrix.length; i++) {
+                if(ctrl.matrix[i] == W){
+                    ctrl.core[i] = {
+                        'x':x,
+                        'y':y,
+                        'z':z
+                    }
+                }
+            }
         }   
     }
 
     ctrl.Query = function(x1,y1,z1,x2,y2,z2,N){
+        if(x1 < 1 || y1 < 1 || z1 < 1 ||
+           x2 < 1 || y2 < 1 || z2 < 1 ||
+           x2 < x1 || y2 < y1 || z2 < z1 ||
+           x1 > N || y1 > N || z1 > N ||
+           x2 > N || y2 > N || z2 > N){
+            ctrl.showCapture = true;
+            ctrl.messageCapture = 'Las coordenadas de la matríz están fuera de rango';
 
+        }else{
+            var sum = 0;
+            for(var i in ctrl.matrix) {
+                /* Buscamos la posición de [N] en  el array validando con las diferentes coordenadas alamacenadas en [ctrl.matrix] ubicando cada objeto
+                   con la {llave->valor} de [N] en el array [ctrl.matrix] */
+                if((ctrl.core[i].x >= x1) && 
+                   (ctrl.core[i].x <= x2) && 
+                   (ctrl.core[i].y >= y1) && 
+                   (ctrl.core[i].y <= y2) && 
+                   (ctrl.core[i].z >= z1) && 
+                   (ctrl.core[i].z <= z2)){
+                    /* Obtenemos el valor de N de acuerdo a la previa validación de las coordenadas */
+                    sum+= ctrl.matrix[i];
+                }
+            }
+            ctrl.result.push(sum);
+        }
     }
 
     $timeout(ctrl.init);

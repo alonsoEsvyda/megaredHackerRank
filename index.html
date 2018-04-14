@@ -18,9 +18,9 @@
                 <div class="col-md-12">
                     <h4>Presentación:</h4>
                     <div id="output">
-                        <label ng-if="controller.showMatrix">
-                            {{ controller.matrix }}
-                        </label>
+                        <div ng-repeat="result in controller.result track by $index">
+                            {{ result }}
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-12">
